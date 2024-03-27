@@ -198,21 +198,37 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                           );
                         }
                       },
-                      child: Row(
-                        children: [
-                          Text(
-                            _currentPage == widget.pages.length - 1
-                                ? "Finish"
-                                : "Next",
-                          ),
-                          const SizedBox(width: 8),
-                          Icon(
-                            _currentPage == widget.pages.length - 1
-                                ? Icons.done
-                                : Icons.arrow_forward,
-                          ),
-                        ],
-                      ),
+                    child: Row(
+  children: [
+    Text(
+      _currentPage == widget.pages.length - 1
+          ? "Finish"
+          : "Next",
+    ),
+    const SizedBox(width: 8),
+    InkWell(
+      
+      onTap: () {
+        if (_currentPage == widget.pages.length - 1) {
+          // Redirigez l'utilisateur vers la page d'accueil si c'est la dernière page et que toutes les listes sont terminées
+        } else {
+          // Sinon, changez de page normalement
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.ease,
+          );
+        }
+      },
+      child: Icon(
+        _currentPage == widget.pages.length - 1
+            ? Icons.done
+            : Icons.arrow_forward,
+
+      ),
+    ),
+  ],
+),
+
                     ),
                   ],
                 ),
@@ -236,7 +252,7 @@ class OnboardingPageModel {
     required this.title,
     required this.description,
     required this.imageUrl,
-    this.bgColor = Colors.blue,
+    this.bgColor = Colors.orange,
     this.textColor = Colors.white,
   });
 }

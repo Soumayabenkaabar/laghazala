@@ -18,7 +18,7 @@ class SignupPage extends StatelessWidget {
                 children: <Widget>[
                     Center(
       child: Image.asset(
-        "images/A.png",
+        "assets/images/A.png",
         width: 150, // ajustez la largeur de l'image selon vos besoins
         height: 150, // ajustez la hauteur de l'image selon vos besoins
       ),

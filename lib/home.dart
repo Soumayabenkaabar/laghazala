@@ -1,18 +1,6 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:laghazala/profil.dart';
-
-/// A more functional demo of the usage of the adaptive layout helper widgets.
-/// Specifically, it is built using an [AdaptiveLayout] and uses static helpers
-/// from [AdaptiveScaffold].
-///
-/// Modeled off of the example on the Material 3 page regarding adaptive layouts.
-/// For a more clear cut example usage, please look at adaptive_layout_demo.dart
-/// or adaptive_scaffold_demo.dart
 
 void main() {
   runApp(const Myhome());
@@ -31,7 +19,8 @@ class Myhome extends StatelessWidget {
         _ExtractRouteArguments.routeName: (_) => const _ExtractRouteArguments()
       },
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blue,
+        secondaryHeaderColor: Colors.orange,
       ),
       home: const MyHomePage(),
     );
@@ -123,94 +112,27 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     final Widget trailingNavRail = Expanded(
-      child: Column(
-        children: <Widget>[
-          const Divider(color: Colors.white, thickness: 1.5),
-          const SizedBox(height: 10),
-          Row(children: <Widget>[
-            const SizedBox(width: 22),
-            Text('Folders',
-                style: TextStyle(fontSize: 13, color: Colors.grey[700]))
-          ]),
-          const SizedBox(height: 22),
-          Row(
-            children: <Widget>[
-              const SizedBox(width: 16),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.folder_copy_outlined),
-                iconSize: 21,
-              ),
-              const SizedBox(width: 21),
-              const Text('Freelance', overflow: TextOverflow.ellipsis),
-            ],
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: SwitchListTile.adaptive(
+          title: const Text(
+            'Directionality',
+            style: TextStyle(fontSize: 12),
           ),
-          const SizedBox(height: 16),
-          Row(
-            children: <Widget>[
-              const SizedBox(width: 16),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.folder_copy_outlined),
-                iconSize: 21,
-              ),
-              const SizedBox(width: 21),
-              const Text('Mortgage', overflow: TextOverflow.ellipsis),
-            ],
+          subtitle: Text(
+            directionalityOverride == TextDirection.ltr ? 'FR' : 'ENG',
           ),
-          const SizedBox(height: 16),
-          Row(
-            children: <Widget>[
-              const SizedBox(width: 16),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.folder_copy_outlined),
-                iconSize: 21,
-              ),
-              const SizedBox(width: 21),
-              const Flexible(
-                  child: Text('Taxes', overflow: TextOverflow.ellipsis))
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: <Widget>[
-              const SizedBox(width: 16),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.folder_copy_outlined),
-                iconSize: 21,
-              ),
-              const SizedBox(width: 21),
-              const Flexible(
-                  child: Text('Receipts', overflow: TextOverflow.ellipsis))
-            ],
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: SwitchListTile.adaptive(
-                title: const Text(
-                  'Directionality',
-                  style: TextStyle(fontSize: 12),
-                ),
-                subtitle: Text(
-                  directionalityOverride == TextDirection.ltr ? 'LTR' : 'RTL',
-                ),
-                value: directionalityOverride == TextDirection.ltr,
-                onChanged: (bool value) {
-                  setState(() {
-                    if (value) {
-                      directionalityOverride = TextDirection.ltr;
-                    } else {
-                      directionalityOverride = TextDirection.rtl;
-                    }
-                  });
-                },
-              ),
-            ),
-          ),
-        ],
+          value: directionalityOverride == TextDirection.ltr,
+          onChanged: (bool value) {
+            setState(() {
+              if (value) {
+                directionalityOverride = TextDirection.ltr;
+              } else {
+                directionalityOverride = TextDirection.rtl;
+              }
+            });
+          },
+        ),
       ),
     );
 
@@ -218,20 +140,24 @@ class _MyHomePageState extends State<MyHomePage>
     // builders.
     const List<NavigationDestination> destinations = <NavigationDestination>[
       NavigationDestination(
-        label: 'Inbox',
-        icon: Icon(Icons.inbox),
+        label: 'Home',
+        icon: Icon(Icons.home),
       ),
       NavigationDestination(
-        label: 'Articles',
-        icon: Icon(Icons.article_outlined),
+        label: 'Our training',
+        icon: Icon(Icons.school_outlined),
       ),
       NavigationDestination(
-        label: 'Chat',
-        icon: Icon(Icons.chat_bubble_outline),
+        label: 'About',
+        icon: Icon(Icons.all_inbox_outlined),
       ),
       NavigationDestination(
-        label: 'Video',
-        icon: Icon(Icons.video_call_outlined),
+        label: 'opinions',
+        icon: Icon(Icons.message),
+      ),
+      NavigationDestination(
+        label: 'Save',
+        icon: Icon(Icons.turned_in),
       )
     ];
 
@@ -275,26 +201,32 @@ class _MyHomePageState extends State<MyHomePage>
                       slideInNavigationItem(
                         begin: -1,
                         controller: _inboxIconSlideController,
-                        icon: Icons.inbox,
-                        label: 'Inbox',
+                        label: 'Home',
+                        icon: Icons.home,
                       ),
                       slideInNavigationItem(
                         begin: -2,
                         controller: _articleIconSlideController,
-                        icon: Icons.article_outlined,
-                        label: 'Articles',
+                        label: 'Our training',
+                        icon: Icons.school_outlined,
                       ),
                       slideInNavigationItem(
                         begin: -3,
                         controller: _chatIconSlideController,
-                        icon: Icons.chat_bubble_outline,
-                        label: 'Chat',
+                        label: 'About',
+                        icon: Icons.all_inbox_outlined,
                       ),
                       slideInNavigationItem(
                         begin: -4,
                         controller: _videoIconSlideController,
-                        icon: Icons.video_call_outlined,
-                        label: 'Video',
+                        label: 'opinions',
+                        icon: Icons.message,
+                      ),
+                      slideInNavigationItem(
+                        begin: -4,
+                        controller: _videoIconSlideController,
+                        label: 'Save',
+                        icon: Icons.turned_in,
                       )
                     ],
                   );
@@ -350,9 +282,6 @@ class _MyHomePageState extends State<MyHomePage>
                       // disappearing as it is animating out.
                       outAnimation: AdaptiveScaffold.stayOnScreen,
                       key: const Key('Secondary Body'),
-                      builder: (_) => SafeArea(
-                        child: _DetailTile(item: _allItems[selected ?? 0]),
-                      ),
                     )
                   },
                 )
@@ -416,11 +345,13 @@ class _SmallComposeIcon extends StatelessWidget {
       ),
       width: 50,
       height: 50,
-      child:  IconButton(
-                onPressed: () {Profile();},
-                icon: const Icon(Icons.person),
-                iconSize: 21,
-              ),
+      child: IconButton(
+        onPressed: () {
+          Profile();
+        },
+        icon: const Icon(Icons.person),
+        iconSize: 21,
+      ),
     );
   }
 }
@@ -455,7 +386,7 @@ class _LargeComposeIcon extends StatelessWidget {
             children: <Widget>[
               Text(
                 'REPLY',
-                style: TextStyle(color: Colors.deepPurple, fontSize: 15),
+                style: TextStyle(color: Colors.orange, fontSize: 15),
               ),
               Icon(Icons.menu_open, size: 22)
             ],
@@ -482,7 +413,6 @@ class _LargeComposeIcon extends StatelessWidget {
           height: 50,
           child: const Padding(
             padding: EdgeInsets.fromLTRB(16.0, 0, 0, 0),
-            
             child: Row(
               children: <Widget>[
                 Icon(Icons.person),
@@ -531,11 +461,11 @@ class _ItemList extends StatelessWidget {
                 suffixIcon: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: CircleAvatar(
-                    radius: 18,
+                    radius: 20,
                     child: Image.asset(
-                      'images/plum.png',
-                      width: 100,
-                      height: 100,
+                      'assets/images/A.png',
+                      width: 50,
+                      height: 50,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -553,17 +483,32 @@ class _ItemList extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (BuildContext context, int index) => _ItemListTile(
-                item: items[index],
-                email: items[index].emails![0],
-                selectCard: selectCard,
-                selected: selected,
-              ),
-            ),
-          ),
+Expanded(
+  child: LayoutBuilder(
+    builder: (context, constraints) {
+      double aspectRatio = constraints.maxWidth >= 600 ? 5 / 5 : 1 / 1;
+      return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: constraints.maxWidth >= 600 ? 3 : 1,
+          crossAxisSpacing: 8.0,
+          mainAxisSpacing: 8.0,
+          childAspectRatio: aspectRatio,
+        ),
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _ItemListTile(
+            item: items[index],
+            email: items[index].emails![0],
+            selectCard: selectCard,
+            selected: selected,
+          );
+        },
+      );
+    },
+  ),
+),
+
+
         ],
       ),
     );
@@ -586,30 +531,17 @@ class _ItemListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // The behavior of opening a detail view is different on small screens
-        // than large screens.
-        // Small screens open a modal with the detail view while large screens
-        // simply show the details on the secondaryBody.
-        selectCard(_allItems.indexOf(item));
-        if (!Breakpoints.mediumAndUp.isActive(context)) {
-          Navigator.of(context).pushNamed(_ExtractRouteArguments.routeName,
-              arguments: _ScreenArguments(item: item, selectCard: selectCard));
-        } else {
-          selectCard(_allItems.indexOf(item));
-        }
-      },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(1.0),
         child: Container(
           decoration: BoxDecoration(
             color: selected == _allItems.indexOf(item)
-                ? const Color.fromARGB(255, 234, 222, 255)
-                : const Color.fromARGB(255, 243, 237, 247),
+                ? Color.fromARGB(255, 243, 227, 128)
+                : Color.fromARGB(255, 156, 190, 250),
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -617,10 +549,11 @@ class _ItemListTile extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
                     radius: 18,
+                    //image de prof
                     child: Image.asset(
                       email.image,
-                      width: 100,
-                      height: 100,
+                      width: 50,
+                      height: 50,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -645,10 +578,10 @@ class _ItemListTile extends StatelessWidget {
                   trailing: Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: const BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.all(Radius.circular(50)),
                     ),
-                    child: Icon(Icons.star_outline, color: Colors.grey[500]),
+                    child: Icon(Icons.turned_in_not, color: Colors.grey[500]),
                   ),
                 ),
                 const SizedBox(height: 13),
@@ -661,116 +594,11 @@ class _ItemListTile extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: (email.bodyImage != '')
-                      ? Image.asset(email.bodyImage)
+                      ? Image.asset(email.bodyImage,fit: BoxFit.cover,height: 150,width: 100,)
                       : Container(),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DetailTile extends StatelessWidget {
-  const _DetailTile({required this.item});
-
-  final _Item item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 245, 241, 248),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  item.title,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                                const SizedBox(height: 7),
-                                Text(
-                                  '${item.emails!.length} Messages',
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                padding: const EdgeInsets.all(8.0),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                                child: Icon(
-                                  Icons.restore_from_trash,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                              Container(
-                                padding: const EdgeInsets.all(8.0),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                                child: Icon(Icons.more_vert,
-                                    color: Colors.grey[600]),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: item.emails!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final _Email thisEmail = item.emails![index];
-                    return _EmailTile(
-                      sender: thisEmail.sender,
-                      time: thisEmail.time,
-                      senderIcon: thisEmail.image,
-                      recipients: thisEmail.recipients,
-                      body: thisEmail.body,
-                      bodyImage: thisEmail.bodyImage,
-                    );
-                  },
-                ),
-              ),
-            ],
           ),
         ),
       ),
@@ -833,14 +661,6 @@ class _EmailTile extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 245, 241, 248),
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: Icon(Icons.star_outline, color: Colors.grey[500]),
-                  ),
                 ],
               ),
               if (recipients != '')
@@ -859,57 +679,11 @@ class _EmailTile extends StatelessWidget {
               SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child:
-                      (bodyImage != '') ? Image.asset(bodyImage) : Container()),
+                      (bodyImage != '') ? Image.asset(bodyImage, fit: BoxFit.cover) : Container()),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  SizedBox(
-                    width: 126,
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 245, 241, 248),
-                        ),
-                        side: MaterialStateProperty.all(
-                          const BorderSide(
-                              width: 0.0, color: Colors.transparent),
-                        ),
-                      ),
-                      child: Text('Reply',
-                          style:
-                              TextStyle(color: Colors.grey[700], fontSize: 12)),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 126,
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 245, 241, 248),
-                        ),
-                        side: MaterialStateProperty.all(
-                          const BorderSide(
-                              width: 0.0, color: Colors.transparent),
-                        ),
-                      ),
-                      child: Text(
-                        'Reply all',
-                        style: TextStyle(color: Colors.grey[700], fontSize: 12),
-                      ),
-                    ),
-                  ),
-                ],
+                children: <Widget>[],
               ),
             ],
           ),
@@ -961,16 +735,8 @@ class _RouteDetailView extends StatelessWidget {
         children: <Widget>[
           Align(
             alignment: Alignment.topLeft,
-            child: TextButton(
-              onPressed: () {
-                Navigator.popUntil(context,
-                    (Route<dynamic> route) => route.settings.name == '/');
-                selectCard(null);
-              },
-              child: const Icon(Icons.arrow_back),
-            ),
+            child: const Icon(Icons.arrow_back),
           ),
-          Expanded(child: _DetailTile(item: item)),
         ],
       ),
     );
@@ -1025,26 +791,11 @@ const List<_Item> _allItems = <_Item>[
         recipients: 'me, Ziad and Lily',
         image: 'images/strawberry.png',
         time: '20 min',
+                bodyImage: 'assets/images/bg.jpg',
+
         body:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec gravida tellus, vel scelerisque nisi. Mauris egestas, augue nec dictum tempus, diam sapien luctus odio, a posuere sem neque at nulla. Vivamus pulvinar nisi et dapibus dapibus. Donec euismod pellentesque ultrices. Vivamus quis condimentum metus, in venenatis lorem. Proin suscipit tincidunt eleifend. Praesent a nisi ac ipsum sodales gravida.',
-        bodyImage: '',
       ),
-      _Email(
-          sender: 'Me',
-          recipients: 'me, Ziad, and Lily',
-          image: 'images/plum.png',
-          time: '4 min',
-          body:
-              'Donec non mollis nulla, in varius mi. Ut id lorem eget felis lobortis tincidunt. Curabitur facilisis ex vitae tristique efficitur. Aenean eget augue finibus, tempor eros vitae, tempor neque. In sed pellentesque elit. Donec lacus lacus, malesuada in tincidunt sit amet, condimentum vel enim. Cras dapibus erat quis nisl hendrerit, vel pretium turpis condimentum. ',
-          bodyImage: ''),
-      _Email(
-          sender: 'Ziad Aouad',
-          recipients: 'me, Ziad and Lily',
-          image: 'images/mushroom.png',
-          time: '2 min',
-          body:
-              'Duis sit amet nibh a diam placerat aliquam nec ac mi. Aenean hendrerit efficitur tellus, non pharetra eros posuere sit amet. Maecenas interdum lacinia eleifend. Nam efficitur tellus et dolor vestibulum, non dictum quam iaculis. Aenean id nulla ut erat placerat feugiat. Mauris in quam metus. Aliquam erat volutpat.',
-          bodyImage: ''),
     ],
   ),
   _Item(
@@ -1056,7 +807,7 @@ const List<_Item> _allItems = <_Item>[
         body:
             'Curabitur tincidunt purus at vulputate mattis. Nam lectus urna, varius eget quam in, ultricies ultrices libero. Curabitur rutrum ultricies varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vulputate auctor est, non semper velit eleifend sit amet.',
         image: 'images/potato.png',
-        bodyImage: 'images/avocado.png',
+        bodyImage: 'assets/images/azs.jpg',
         recipients: '',
       ),
     ],
